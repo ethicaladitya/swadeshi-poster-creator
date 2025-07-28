@@ -5,7 +5,8 @@ import { PosterPreview, type FrameType } from "@/components/PosterPreview";
 import { CameraCapture } from "@/components/CameraCapture";
 import { PhotoEditor } from "@/components/PhotoEditor";
 import { MessageEditor } from "@/components/MessageEditor";
-import { Download, Share2, Wand2 } from "lucide-react";
+import { usePosterGenerator } from "@/hooks/usePosterGenerator";
+import { Download, Share2, Wand2, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const Index = () => {
@@ -15,6 +16,10 @@ const Index = () => {
   const [showCamera, setShowCamera] = useState(false);
   const [showEditor, setShowEditor] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [isSharing, setIsSharing] = useState(false);
+  
+  const { downloadPoster, sharePoster } = usePosterGenerator();
   
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
@@ -60,20 +65,75 @@ const Index = () => {
     setSelectedFile(null);
   };
 
-  const handleDownload = () => {
-    // This would implement the poster generation and download logic
-    toast({
-      title: "Generating Poster...",
-      description: "Your poster will be ready for download shortly.",
-    });
+  const handleDownload = async () => {
+    if (!userImage) {
+      toast({
+        title: "No Photo",
+        description: "Please add your photo first.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsGenerating(true);
+    try {
+      await downloadPoster(userImage, frameType, customMessage);
+      toast({
+        title: "Success!",
+        description: "Your poster has been downloaded successfully.",
+      });
+    } catch (error) {
+      console.error("Download error:", error);
+      toast({
+        title: "Download Failed",
+        description: "There was an error generating your poster. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
-  const handleShare = () => {
-    // This would implement social media sharing logic
-    toast({
-      title: "Share Feature",
-      description: "Social media sharing will be available soon!",
-    });
+  const handleShare = async () => {
+    if (!userImage) {
+      toast({
+        title: "No Photo",
+        description: "Please add your photo first.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSharing(true);
+    try {
+      const result = await sharePoster(userImage, frameType, customMessage);
+      
+      if (result === 'clipboard') {
+        toast({
+          title: "Copied to Clipboard!",
+          description: "Your poster has been copied to clipboard. You can now paste it in your social media apps.",
+        });
+      } else if (result === 'download') {
+        toast({
+          title: "Downloaded!",
+          description: "Sharing not supported on this device. Your poster has been downloaded instead.",
+        });
+      } else {
+        toast({
+          title: "Shared Successfully!",
+          description: "Your poster is ready to share on social media.",
+        });
+      }
+    } catch (error) {
+      console.error("Share error:", error);
+      toast({
+        title: "Share Failed",
+        description: "There was an error sharing your poster. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSharing(false);
+    }
   };
 
   return (
@@ -100,12 +160,12 @@ const Index = () => {
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">
-        <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+      <main className="container mx-auto px-4 py-4 sm:py-8">
+        <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 max-w-6xl mx-auto">
           {/* Left Column - Poster Preview */}
-          <div className="space-y-6">
+          <div className="space-y-4 lg:space-y-6">
             <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
-              <CardContent className="p-6">
+              <CardContent className="p-4 sm:p-6">
                 <PosterPreview
                   userImage={userImage}
                   frameType={frameType}
@@ -119,26 +179,34 @@ const Index = () => {
 
             {/* Generate Poster Actions */}
             <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
-              <CardContent className="p-6">
+              <CardContent className="p-4 sm:p-6">
                 <div className="space-y-4">
                   <h3 className="text-lg font-semibold font-display">Generate Your Poster</h3>
                   <div className="grid sm:grid-cols-2 gap-3">
                     <Button
                       onClick={handleDownload}
-                      className="flex items-center justify-center space-x-2"
-                      disabled={!userImage}
+                      className="flex items-center justify-center space-x-2 h-11"
+                      disabled={!userImage || isGenerating}
                     >
-                      <Download className="w-4 h-4" />
-                      <span>Download Poster</span>
+                      {isGenerating ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <Download className="w-4 h-4" />
+                      )}
+                      <span>{isGenerating ? "Generating..." : "Download Poster"}</span>
                     </Button>
                     <Button
                       onClick={handleShare}
                       variant="outline"
-                      className="flex items-center justify-center space-x-2"
-                      disabled={!userImage}
+                      className="flex items-center justify-center space-x-2 h-11"
+                      disabled={!userImage || isSharing}
                     >
-                      <Share2 className="w-4 h-4" />
-                      <span>Share on Social</span>
+                      {isSharing ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <Share2 className="w-4 h-4" />
+                      )}
+                      <span>{isSharing ? "Sharing..." : "Share on Social"}</span>
                     </Button>
                   </div>
                   {!userImage && (
@@ -152,7 +220,7 @@ const Index = () => {
           </div>
 
           {/* Right Column - Message Editor */}
-          <div className="space-y-6">
+          <div className="space-y-4 lg:space-y-6">
             <div className="bg-white/80 backdrop-blur-sm rounded-lg border-0 shadow-lg">
               <MessageEditor
                 value={customMessage}
@@ -162,25 +230,25 @@ const Index = () => {
 
             {/* Instructions */}
             <Card className="bg-success-light border-success/20">
-              <CardContent className="p-6">
+              <CardContent className="p-4 sm:p-6">
                 <h3 className="text-lg font-semibold font-display text-success-foreground mb-3">
                   How to Create Your Poster
                 </h3>
                 <div className="space-y-2 text-sm text-success-foreground">
                   <div className="flex items-start space-x-2">
-                    <span className="font-semibold">1.</span>
+                    <span className="font-semibold flex-shrink-0">1.</span>
                     <span>Choose your frame shape (square or circle)</span>
                   </div>
                   <div className="flex items-start space-x-2">
-                    <span className="font-semibold">2.</span>
+                    <span className="font-semibold flex-shrink-0">2.</span>
                     <span>Add your photo using camera or upload</span>
                   </div>
                   <div className="flex items-start space-x-2">
-                    <span className="font-semibold">3.</span>
+                    <span className="font-semibold flex-shrink-0">3.</span>
                     <span>Customize your message or use our suggestions</span>
                   </div>
                   <div className="flex items-start space-x-2">
-                    <span className="font-semibold">4.</span>
+                    <span className="font-semibold flex-shrink-0">4.</span>
                     <span>Generate and share your poster!</span>
                   </div>
                 </div>
