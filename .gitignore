@@ -22,3 +22,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+copy_utils.py
+all_code_snippets.txt
