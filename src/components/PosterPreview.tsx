@@ -91,7 +91,7 @@ export const PosterPreview = ({
 
       {/* Poster Preview */}
       <Card className="relative overflow-hidden border-2 border-dashed border-muted-foreground/20 hover:border-primary/50 transition-smooth">
-        <div className="relative w-80 h-80 sm:w-96 sm:h-96 bg-gradient-to-br from-primary-light to-accent">
+        <div className="relative w-72 h-128 sm:w-80 sm:h-144 bg-gradient-to-br from-primary-light to-accent" style={{ aspectRatio: '9/16' }}>
           {/* Background Poster Template */}
           <img
             src={posterImages[posterType]}

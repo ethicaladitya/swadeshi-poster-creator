@@ -232,12 +232,12 @@ const Index = () => {
             </div>
 
             {/* Instructions */}
-            <Card className="bg-success-light border-success/20">
+            <Card className="bg-slate-900 border-slate-700">
               <CardContent className="p-4 sm:p-6">
-                <h3 className="text-lg font-semibold font-display text-success-foreground mb-3">
+                <h3 className="text-lg font-semibold font-display text-white mb-3">
                   How to Create Your Poster
                 </h3>
-                <div className="space-y-2 text-sm text-success-foreground">
+                <div className="space-y-2 text-sm text-slate-200">
                   <div className="flex items-start space-x-2">
                     <span className="font-semibold flex-shrink-0">1.</span>
                     <span>Choose your frame shape (square or circle)</span>
@@ -253,6 +253,95 @@ const Index = () => {
                   <div className="flex items-start space-x-2">
                     <span className="font-semibold flex-shrink-0">4.</span>
                     <span>Generate and share your poster!</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Captions Section */}
+            <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
+              <CardContent className="p-4 sm:p-6">
+                <h3 className="text-lg font-semibold font-display mb-4">Share with these captions:</h3>
+                
+                <div className="space-y-4">
+                  <div className="bg-slate-50 rounded-lg p-4 border">
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className="font-semibold text-slate-700">General/Instagram</h4>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          navigator.clipboard.writeText("🎉 Just created my personalized GCCD 2025 poster! Join me at Cloud Community Day Bhopal 2025 🚀\n\n#CCD2025 #CCDBHOPAL #GoogleDeveloperGroups #CloudCommunityDay #TechEvents #Bhopal #GDGBhopal #GoogleCloud");
+                          toast({
+                            title: "Copied!",
+                            description: "Caption copied to clipboard",
+                          });
+                        }}
+                        className="flex items-center space-x-1"
+                      >
+                        <span>📋</span>
+                        <span>Copy</span>
+                      </Button>
+                    </div>
+                    <p className="text-sm text-slate-600 leading-relaxed">
+                      🎉 Just created my personalized GCCD 2025 poster! Join me at Cloud Community Day Bhopal 2025 🚀
+                      <br /><br />
+                      #CCD2025 #CCDBHOPAL #GoogleDeveloperGroups #CloudCommunityDay #TechEvents #Bhopal #GDGBhopal #GoogleCloud
+                    </p>
+                  </div>
+
+                  <div className="bg-slate-50 rounded-lg p-4 border">
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className="font-semibold text-slate-700">LinkedIn</h4>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          navigator.clipboard.writeText("Excited to announce my participation in Cloud Community Day Bhopal 2025! 🚀\n\nThis premier tech event brings together cloud enthusiasts, developers, and industry experts to explore the latest in cloud technologies.\n\n#CCD2025 #CCDBHOPAL #GoogleDeveloperGroups #CloudCommunityDay #TechEvents #Bhopal #GDGBhopal #GoogleCloud #TechCommunity #CloudComputing");
+                          toast({
+                            title: "Copied!",
+                            description: "LinkedIn caption copied to clipboard",
+                          });
+                        }}
+                        className="flex items-center space-x-1"
+                      >
+                        <span>📋</span>
+                        <span>Copy</span>
+                      </Button>
+                    </div>
+                    <p className="text-sm text-slate-600 leading-relaxed">
+                      Excited to announce my participation in Cloud Community Day Bhopal 2025! 🚀
+                      <br /><br />
+                      This premier tech event brings together cloud enthusiasts, developers, and industry experts to explore the latest in cloud technologies.
+                      <br /><br />
+                      #CCD2025 #CCDBHOPAL #GoogleDeveloperGroups #CloudCommunityDay #TechEvents #Bhopal #GDGBhopal #GoogleCloud #TechCommunity #CloudComputing
+                    </p>
+                  </div>
+
+                  <div className="bg-slate-50 rounded-lg p-4 border">
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className="font-semibold text-slate-700">Twitter/X</h4>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          navigator.clipboard.writeText("Ready for @GDGBhopal Cloud Community Day 2025! 🚀✨\n\n#CCD2025 #CCDBHOPAL #GoogleCloud #TechEvents");
+                          toast({
+                            title: "Copied!",
+                            description: "Twitter caption copied to clipboard",
+                          });
+                        }}
+                        className="flex items-center space-x-1"
+                      >
+                        <span>📋</span>
+                        <span>Copy</span>
+                      </Button>
+                    </div>
+                    <p className="text-sm text-slate-600 leading-relaxed">
+                      Ready for @GDGBhopal Cloud Community Day 2025! 🚀✨
+                      <br /><br />
+                      #CCD2025 #CCDBHOPAL #GoogleCloud #TechEvents
+                    </p>
                   </div>
                 </div>
               </CardContent>
