@@ -1,14 +1,19 @@
 import { useRef } from "react";
-import posterTemplate from "/lovable-uploads/8eb6e34c-f83c-40a8-a46a-161b638b754e.png";
-import type { FrameType } from "@/components/PosterPreview";
+import type { FrameType, PosterType } from "@/components/PosterPreview";
 
 export const usePosterGenerator = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  const posterImages = {
+    poster1: "/lovable-uploads/poster1.png",
+    poster2: "/lovable-uploads/poster2.png"
+  };
+
   const generatePoster = async (
     userImage: string,
     frameType: FrameType,
-    customMessage: string
+    customMessage: string,
+    posterType: PosterType = "poster1"
   ): Promise<string> => {
     return new Promise((resolve, reject) => {
       const canvas = document.createElement('canvas');
@@ -39,7 +44,7 @@ export const usePosterGenerator = () => {
         
         userImg.onload = () => {
           // Calculate frame position (center of poster)
-          const frameSize = 280; // Adjust based on your poster design
+          const frameSize = 360; // Increased frame size for larger photos
           const frameX = (posterWidth - frameSize) / 2;
           const frameY = (posterHeight - frameSize) / 2 - 50; // Slightly above center
 
@@ -115,17 +120,18 @@ export const usePosterGenerator = () => {
         reject(new Error('Failed to load poster template'));
       };
 
-      templateImg.src = posterTemplate;
+      templateImg.src = posterImages[posterType];
     });
   };
 
   const downloadPoster = async (
     userImage: string,
     frameType: FrameType,
-    customMessage: string
+    customMessage: string,
+    posterType: PosterType = "poster1"
   ) => {
     try {
-      const posterDataURL = await generatePoster(userImage, frameType, customMessage);
+      const posterDataURL = await generatePoster(userImage, frameType, customMessage, posterType);
       
       // Create download link
       const link = document.createElement('a');
@@ -145,10 +151,11 @@ export const usePosterGenerator = () => {
   const sharePoster = async (
     userImage: string,
     frameType: FrameType,
-    customMessage: string
+    customMessage: string,
+    posterType: PosterType = "poster1"
   ) => {
     try {
-      const posterDataURL = await generatePoster(userImage, frameType, customMessage);
+      const posterDataURL = await generatePoster(userImage, frameType, customMessage, posterType);
       
       // Convert data URL to blob
       const response = await fetch(posterDataURL);
@@ -174,7 +181,7 @@ export const usePosterGenerator = () => {
           return 'clipboard';
         } else {
           // Final fallback: download
-          await downloadPoster(userImage, frameType, customMessage);
+          await downloadPoster(userImage, frameType, customMessage, posterType);
           return 'download';
         }
       }

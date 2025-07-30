@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { PosterPreview, type FrameType } from "@/components/PosterPreview";
+import { PosterPreview, type FrameType, type PosterType } from "@/components/PosterPreview";
 import { CameraCapture } from "@/components/CameraCapture";
 import { PhotoEditor } from "@/components/PhotoEditor";
 import { MessageEditor } from "@/components/MessageEditor";
@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 const Index = () => {
   const [userImage, setUserImage] = useState<string>("");
   const [frameType, setFrameType] = useState<FrameType>("circle");
+  const [posterType, setPosterType] = useState<PosterType>("poster1");
   const [customMessage, setCustomMessage] = useState("Excited to be part of Cloud Community Day 2025! 🚀");
   const [showCamera, setShowCamera] = useState(false);
   const [showEditor, setShowEditor] = useState(false);
@@ -77,7 +78,7 @@ const Index = () => {
 
     setIsGenerating(true);
     try {
-      await downloadPoster(userImage, frameType, customMessage);
+      await downloadPoster(userImage, frameType, customMessage, posterType);
       toast({
         title: "Success!",
         description: "Your poster has been downloaded successfully.",
@@ -106,7 +107,7 @@ const Index = () => {
 
     setIsSharing(true);
     try {
-      const result = await sharePoster(userImage, frameType, customMessage);
+      const result = await sharePoster(userImage, frameType, customMessage, posterType);
       
       if (result === 'clipboard') {
         toast({
@@ -169,7 +170,9 @@ const Index = () => {
                 <PosterPreview
                   userImage={userImage}
                   frameType={frameType}
+                  posterType={posterType}
                   onFrameTypeChange={setFrameType}
+                  onPosterTypeChange={setPosterType}
                   onCameraClick={() => setShowCamera(true)}
                   onUploadClick={handleUploadClick}
                   customMessage={customMessage}

@@ -5,11 +5,14 @@ import { Camera, Upload, Square, Circle } from "lucide-react";
 import posterTemplate from "/lovable-uploads/8eb6e34c-f83c-40a8-a46a-161b638b754e.png";
 
 export type FrameType = "square" | "circle";
+export type PosterType = "poster1" | "poster2";
 
 interface PosterPreviewProps {
   userImage?: string;
   frameType: FrameType;
+  posterType: PosterType;
   onFrameTypeChange: (type: FrameType) => void;
+  onPosterTypeChange: (type: PosterType) => void;
   onCameraClick: () => void;
   onUploadClick: () => void;
   customMessage?: string;
@@ -18,13 +21,50 @@ interface PosterPreviewProps {
 export const PosterPreview = ({
   userImage,
   frameType,
+  posterType,
   onFrameTypeChange,
+  onPosterTypeChange,
   onCameraClick,
   onUploadClick,
   customMessage
 }: PosterPreviewProps) => {
+  const posterImages = {
+    poster1: "/lovable-uploads/poster1.png",
+    poster2: "/lovable-uploads/poster2.png"
+  };
   return (
     <div className="flex flex-col items-center space-y-4 sm:space-y-6">
+      {/* Poster Selection */}
+      <div className="flex flex-col items-center space-y-3">
+        <span className="text-sm font-medium text-muted-foreground">Choose Poster:</span>
+        <div className="flex items-center space-x-4">
+          <div 
+            className={`relative cursor-pointer transition-all duration-200 ${
+              posterType === "poster1" ? "ring-2 ring-primary scale-105" : "hover:scale-102"
+            }`}
+            onClick={() => onPosterTypeChange("poster1")}
+          >
+            <img
+              src={posterImages.poster1}
+              alt="Poster Option 1"
+              className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-lg border-2 border-muted"
+            />
+          </div>
+          <div 
+            className={`relative cursor-pointer transition-all duration-200 ${
+              posterType === "poster2" ? "ring-2 ring-primary scale-105" : "hover:scale-102"
+            }`}
+            onClick={() => onPosterTypeChange("poster2")}
+          >
+            <img
+              src={posterImages.poster2}
+              alt="Poster Option 2"
+              className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-lg border-2 border-muted"
+            />
+          </div>
+        </div>
+      </div>
+
       {/* Frame Type Selection */}
       <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
         <span className="text-sm font-medium text-muted-foreground">Frame Shape:</span>
@@ -55,7 +95,7 @@ export const PosterPreview = ({
         <div className="relative w-80 h-80 sm:w-96 sm:h-96 bg-gradient-to-br from-primary-light to-accent">
           {/* Background Poster Template */}
           <img
-            src={posterTemplate}
+            src={posterImages[posterType]}
             alt="Poster Template"
             className="absolute inset-0 w-full h-full object-cover"
           />
@@ -63,7 +103,7 @@ export const PosterPreview = ({
           {/* User Image Frame - positioned in the center area of the poster */}
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-4">
             <div 
-              className={`relative w-28 h-28 sm:w-36 sm:h-36 border-2 sm:border-4 border-white shadow-lg overflow-hidden ${
+              className={`relative w-40 h-40 sm:w-48 sm:h-48 border-2 sm:border-4 border-white shadow-lg overflow-hidden ${
                 frameType === "circle" ? "poster-frame-circle" : "poster-frame-square"
               }`}
             >
