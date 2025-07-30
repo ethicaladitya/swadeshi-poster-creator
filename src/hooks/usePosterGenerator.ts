@@ -39,7 +39,7 @@ import { useRef } from "react";
         userImg.crossOrigin = 'anonymous';
 
         userImg.onload = () => {
-          const frameSize = 360;
+          const frameSize = 540;
           const frameX = (posterWidth - frameSize) / 2;
           const frameY = (posterHeight - frameSize) / 2 + posterHeight * 0.06;
 
@@ -67,14 +67,35 @@ import { useRef } from "react";
           // Custom message logic
           if (customMessage && customMessage.trim()) {
             ctx.save();
-            ctx.translate(100, 150); // Top-left offset
+            ctx.translate(100, 300); // Shifted downward
             ctx.rotate(-30 * Math.PI / 180);
             ctx.font = 'bold 36px Orbitron, sans-serif';
-            ctx.lineWidth = 4;
-            ctx.strokeStyle = `hsl(${Math.floor(Math.random() * 360)}, 80%, 60%)`;
-            ctx.strokeText(customMessage, 0, 0);
-            ctx.fillStyle = '#ffffff';
-            ctx.fillText(customMessage, 0, 0);
+            ctx.lineWidth = 0; // No stroke
+            ctx.fillStyle = '#000000'; // Solid black
+
+            // Split the message into 3 lines
+            const words = customMessage.split(' ');
+            const lines: string[] = [];
+            let currentLine = '';
+
+            words.forEach(word => {
+              const testLine = currentLine + word + ' ';
+              if (testLine.length > 30) {
+                lines.push(currentLine.trim());
+                currentLine = word + ' ';
+              } else {
+                currentLine = testLine;
+              }
+            });
+            if (currentLine) lines.push(currentLine.trim());
+
+            // Draw each line with vertical spacing
+            lines.slice(0, 3).forEach((line, index) => {
+              const y = index * 40;
+              ctx.strokeText(line, 0, y);
+              ctx.fillText(line, 0, y);
+            });
+
             ctx.restore();
           }
 

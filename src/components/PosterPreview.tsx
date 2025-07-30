@@ -126,17 +126,32 @@ export const PosterPreview = ({
           </div>
 
           {/* Custom Message Overlay */}
+          {/* Custom Message Overlay - Multi-line and Rotated */}
           {customMessage && (
-          <div
-            className="absolute top-4 left-4 rotate-[-30deg] text-white text-xs sm:text-sm font-bold tracking-wide"
-            style={{
-              textShadow: '1px 1px 2px rgba(0,0,0,0.7)',
-              fontFamily: "'Orbitron', sans-serif",
-            }}
-          >
-            {customMessage}
-          </div>
-        )}
+            <div
+              className="absolute left-0 top-12 transform -rotate-[30deg] text-black font-bold text-xs sm:text-sm tracking-wide"
+              style={{ fontFamily: "'Orbitron', sans-serif" }}
+            >
+              {customMessage
+                .split(' ')
+                .reduce((lines: string[], word: string) => {
+                  const last = lines[lines.length - 1] || '';
+                  if ((last + ' ' + word).length > 30) {
+                    lines.push(word);
+                  } else {
+                    lines[lines.length - 1] = (last + ' ' + word).trim();
+                  }
+                  return lines;
+                }, [''])
+                .slice(0, 3)
+                .map((line, index) => (
+                  <div key={index} style={{ marginTop: index === 0 ? 0 : '0.5rem' }}>
+                    {line}
+                  </div>
+                ))}
+            </div>
+          )}
+
 
         </div>
       </Card>

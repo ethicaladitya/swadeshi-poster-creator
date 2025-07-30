@@ -78,7 +78,7 @@ export const CameraCapture = ({ onCapture, onClose }: CameraCaptureProps) => {
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-start justify-center p-4 pt-8">
-      <Card className="w-full max-w-md mt-8">
+      <Card className="w-full max-w-2xl mt-8">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-lg font-semibold">Camera</CardTitle>
           <Button variant="ghost" size="sm" onClick={onClose}>
