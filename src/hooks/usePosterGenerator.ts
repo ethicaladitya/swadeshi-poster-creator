@@ -5,8 +5,8 @@ export const usePosterGenerator = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const posterImages = {
-    poster1: "/lovable-uploads/poster1.png",
-    poster2: "/lovable-uploads/poster2.png"
+    poster1: "/lovable-uploads/cffb072f-1803-4498-b64e-f201089facda.png",
+    poster2: "/lovable-uploads/aa43d408-f9f1-488d-a569-3f933ac1d31a.png"
   };
 
   const generatePoster = async (
@@ -43,10 +43,10 @@ export const usePosterGenerator = () => {
         userImg.crossOrigin = 'anonymous';
         
         userImg.onload = () => {
-          // Calculate frame position (center of poster)
+          // Calculate frame position (exact center of poster)
           const frameSize = 360; // Increased frame size for larger photos
           const frameX = (posterWidth - frameSize) / 2;
-          const frameY = (posterHeight - frameSize) / 2 - 50; // Slightly above center
+          const frameY = (posterHeight - frameSize) / 2; // Exact center
 
           // Save context for clipping
           ctx.save();

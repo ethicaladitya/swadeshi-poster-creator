@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Camera, Upload, Square, Circle } from "lucide-react";
-import posterTemplate from "/lovable-uploads/8eb6e34c-f83c-40a8-a46a-161b638b754e.png";
 
 export type FrameType = "square" | "circle";
 export type PosterType = "poster1" | "poster2";
@@ -29,8 +28,8 @@ export const PosterPreview = ({
   customMessage
 }: PosterPreviewProps) => {
   const posterImages = {
-    poster1: "/lovable-uploads/poster1.png",
-    poster2: "/lovable-uploads/poster2.png"
+    poster1: "/lovable-uploads/cffb072f-1803-4498-b64e-f201089facda.png",
+    poster2: "/lovable-uploads/aa43d408-f9f1-488d-a569-3f933ac1d31a.png"
   };
   return (
     <div className="flex flex-col items-center space-y-4 sm:space-y-6">
@@ -100,8 +99,8 @@ export const PosterPreview = ({
             className="absolute inset-0 w-full h-full object-cover"
           />
           
-          {/* User Image Frame - positioned in the center area of the poster */}
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-4">
+          {/* User Image Frame - positioned in the middle center of the poster */}
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
             <div 
               className={`relative w-40 h-40 sm:w-48 sm:h-48 border-2 sm:border-4 border-white shadow-lg overflow-hidden ${
                 frameType === "circle" ? "poster-frame-circle" : "poster-frame-square"
