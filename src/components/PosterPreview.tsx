@@ -100,7 +100,7 @@ export const PosterPreview = ({
           />
           
           {/* User Image Frame - positioned in the middle center of the poster */}
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <div className="absolute left-1/2 top-[38%] transform -translate-x-1/2">
             <div 
               className={`relative w-40 h-40 sm:w-48 sm:h-48 border-2 sm:border-4 border-white shadow-lg overflow-hidden ${
                 frameType === "circle" ? "poster-frame-circle" : "poster-frame-square"
@@ -127,14 +127,17 @@ export const PosterPreview = ({
 
           {/* Custom Message Overlay */}
           {customMessage && (
-            <div className="absolute bottom-2 left-2 right-2 sm:bottom-4 sm:left-4 sm:right-4">
-              <div className="bg-white/90 backdrop-blur-sm rounded-lg p-2 sm:p-3 shadow-lg">
-                <p className="text-xs sm:text-sm font-medium text-foreground text-center leading-relaxed">
-                  {customMessage}
-                </p>
-              </div>
-            </div>
-          )}
+          <div
+            className="absolute top-4 left-4 rotate-[-30deg] text-white text-xs sm:text-sm font-bold tracking-wide"
+            style={{
+              textShadow: '1px 1px 2px rgba(0,0,0,0.7)',
+              fontFamily: "'Orbitron', sans-serif",
+            }}
+          >
+            {customMessage}
+          </div>
+        )}
+
         </div>
       </Card>
 
