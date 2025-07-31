@@ -62,57 +62,7 @@ export const usePosterGenerator = () => {
           }
 
           ctx.drawImage(userImg, frameX, frameY, frameSize, frameSize);
-          ctx.restore();
-
-          // Custom message logic (top-left, full sentence, white box)
-          if (customMessage && customMessage.trim()) {
-              ctx.save();
-
-              const sentence = customMessage.trim();
-              const maxWidth = 900; // Allow multi-line within this width
-              const lineHeight = 40;
-              const fontSize = 42;
-              const padding = 24;
-              const textX = 50;
-              const textY = 50;
-
-              ctx.font = `bold ${fontSize}px 'Orbitron', sans-serif`;
-              ctx.textBaseline = "top";
-              ctx.fillStyle = "black";
-
-              // Manual line breaking
-              const words = sentence.split(" ");
-              const lines: string[] = [];
-              let currentLine = words[0];
-
-              for (let i = 1; i < words.length; i++) {
-                const word = words[i];
-                const width = ctx.measureText(currentLine + " " + word).width;
-                if (width < maxWidth) {
-                  currentLine += " " + word;
-                } else {
-                  lines.push(currentLine);
-                  currentLine = word;
-                }
-              }
-              lines.push(currentLine);
-
-              const boxHeight = lines.length * lineHeight + padding * 2;
-              const boxWidth = maxWidth + padding * 2;
-
-              // Draw white background box
-              ctx.fillStyle = "white";
-              ctx.fillRect(textX - padding, textY - padding, boxWidth, boxHeight);
-
-              // Draw each line
-              ctx.fillStyle = "black";
-              lines.forEach((line, i) => {
-                ctx.fillText(line, textX, textY + i * lineHeight);
-              });
-
-              ctx.restore();
-            }
-
+          ctx.restore();         
 
           const dataURL = canvas.toDataURL("image/png", 1.0);
           resolve(dataURL);

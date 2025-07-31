@@ -14,7 +14,6 @@ interface PosterPreviewProps {
   onPosterTypeChange: (type: PosterType) => void;
   onCameraClick: () => void;
   onUploadClick: () => void;
-  customMessage?: string;
 }
 
 export const PosterPreview = ({
@@ -25,7 +24,6 @@ export const PosterPreview = ({
   onPosterTypeChange,
   onCameraClick,
   onUploadClick,
-  customMessage
 }: PosterPreviewProps) => {
   const posterImages = {
     poster1: "/lovable-uploads/cffb072f-1803-4498-b64e-f201089facda.png",
@@ -124,22 +122,6 @@ export const PosterPreview = ({
               )}
             </div>
           </div>
-
-          {/* Custom Message Overlay */}
-          {/* Custom Message Overlay - Multi-line and Rotated */}
-          {customMessage && (
-            <div
-              className="absolute top-4 left-4 text-left font-bold text-xs sm:text-sm"
-              style={{ fontFamily: "'Orbitron', sans-serif" }}
-            >
-              <div className="bg-white text-black px-3 py-2 rounded shadow">
-                {customMessage}
-              </div>
-            </div>
-          )}
-
-
-
         </div>
       </Card>
 

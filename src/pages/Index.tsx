@@ -4,7 +4,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { PosterPreview, type FrameType, type PosterType } from "@/components/PosterPreview";
 import { CameraCapture } from "@/components/CameraCapture";
 import { PhotoEditor } from "@/components/PhotoEditor";
-import { MessageEditor } from "@/components/MessageEditor";
 import { usePosterGenerator } from "@/hooks/usePosterGenerator";
 import { Download, Share2, Wand2, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -13,7 +12,6 @@ const Index = () => {
   const [userImage, setUserImage] = useState<string>("");
   const [frameType, setFrameType] = useState<FrameType>("circle");
   const [posterType, setPosterType] = useState<PosterType>("poster1");
-  const [customMessage, setCustomMessage] = useState("Excited to be part of Cloud Community Day 2025! 🚀");
   const [showCamera, setShowCamera] = useState(false);
   const [showEditor, setShowEditor] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -78,7 +76,7 @@ const Index = () => {
 
     setIsGenerating(true);
     try {
-      await downloadPoster(userImage, frameType, customMessage, posterType);
+      await downloadPoster(userImage, frameType, posterType);
       toast({
         title: "Success!",
         description: "Your poster has been downloaded successfully.",
@@ -107,7 +105,7 @@ const Index = () => {
 
     setIsSharing(true);
     try {
-      const result = await sharePoster(userImage, frameType, customMessage, posterType);
+      const result = await sharePoster(userImage, frameType, posterType);
       
       if (result === 'clipboard') {
         toast({
@@ -175,7 +173,6 @@ const Index = () => {
                   onPosterTypeChange={setPosterType}
                   onCameraClick={() => setShowCamera(true)}
                   onUploadClick={handleUploadClick}
-                  customMessage={customMessage}
                 />
               </CardContent>
             </Card>
@@ -224,12 +221,6 @@ const Index = () => {
 
           {/* Right Column - Message Editor */}
           <div className="space-y-4 lg:space-y-6">
-            <div className="bg-white/80 backdrop-blur-sm rounded-lg border-0 shadow-lg">
-              <MessageEditor
-                value={customMessage}
-                onChange={setCustomMessage}
-              />
-            </div>
 
             {/* Instructions */}
             <Card className="bg-slate-900 border-slate-700">
