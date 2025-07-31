@@ -262,7 +262,7 @@ const Index = () => {
                         variant="outline"
                         size="sm"
                         onClick={() => {
-                          navigator.clipboard.writeText("🎉 Just created my personalized GCCD 2025 poster! Join me at Cloud Community Day Bhopal 2025 🚀\n\n#CCD2025 #CCDBHOPAL #GoogleDeveloperGroups #CloudCommunityDay #TechEvents #Bhopal #GDGBhopal #GoogleCloud");
+                          navigator.clipboard.writeText("🎉 Just created my personalized GCCD 2025 poster! Join me at Cloud Community Day Bhopal 2025 @gdgcloudbhopal🚀\n\n#CCD2025 #CCDBHOPAL #GoogleDeveloperGroups #CloudCommunityDay #TechEvents #Bhopal #GDGBhopal #GoogleCloud");
                           toast({
                             title: "Copied!",
                             description: "Caption copied to clipboard",
@@ -275,7 +275,7 @@ const Index = () => {
                       </Button>
                     </div>
                     <p className="text-sm text-slate-600 leading-relaxed">
-                      🎉 Just created my personalized GCCD 2025 poster! Join me at Cloud Community Day Bhopal 2025 🚀
+                      🎉 Just created my personalized GCCD 2025 poster! Join me at Cloud Community Day Bhopal 2025 @gdgcloudbhopal🚀
                       <br /><br />
                       #CCD2025 #CCDBHOPAL #GoogleDeveloperGroups #CloudCommunityDay #TechEvents #Bhopal #GDGBhopal #GoogleCloud
                     </p>
@@ -288,7 +288,7 @@ const Index = () => {
                         variant="outline"
                         size="sm"
                         onClick={() => {
-                          navigator.clipboard.writeText("Excited to announce my participation in Cloud Community Day Bhopal 2025! 🚀\n\nThis premier tech event brings together cloud enthusiasts, developers, and industry experts to explore the latest in cloud technologies.\n\n#CCD2025 #CCDBHOPAL #GoogleDeveloperGroups #CloudCommunityDay #TechEvents #Bhopal #GDGBhopal #GoogleCloud #TechCommunity #CloudComputing");
+                          navigator.clipboard.writeText("Excited to announce my participation in Cloud Community Day Bhopal 2025! @gdgcloudbhopal🚀\n\nThis premier tech event brings together cloud enthusiasts, developers, and industry experts to explore the latest in cloud technologies.\n\n#CCD2025 #CCDBHOPAL #GoogleDeveloperGroups #CloudCommunityDay #TechEvents #Bhopal #GDGBhopal #GoogleCloud #TechCommunity #CloudComputing");
                           toast({
                             title: "Copied!",
                             description: "LinkedIn caption copied to clipboard",
@@ -301,7 +301,7 @@ const Index = () => {
                       </Button>
                     </div>
                     <p className="text-sm text-slate-600 leading-relaxed">
-                      Excited to announce my participation in Cloud Community Day Bhopal 2025! 🚀
+                      Excited to announce my participation in Cloud Community Day Bhopal 2025! @gdgcloudbhopal🚀
                       <br /><br />
                       This premier tech event brings together cloud enthusiasts, developers, and industry experts to explore the latest in cloud technologies.
                       <br /><br />
@@ -316,7 +316,7 @@ const Index = () => {
                         variant="outline"
                         size="sm"
                         onClick={() => {
-                          navigator.clipboard.writeText("Ready for @GDGBhopal Cloud Community Day 2025! 🚀✨\n\n#CCD2025 #CCDBHOPAL #GoogleCloud #TechEvents");
+                          navigator.clipboard.writeText("Ready for @GDGBhopal Cloud Community Day 2025! @gdgcloudbhopal🚀✨\n\n#CCD2025 #CCDBHOPAL #GoogleCloud #TechEvents");
                           toast({
                             title: "Copied!",
                             description: "Twitter caption copied to clipboard",
@@ -329,7 +329,7 @@ const Index = () => {
                       </Button>
                     </div>
                     <p className="text-sm text-slate-600 leading-relaxed">
-                      Ready for @GDGBhopal Cloud Community Day 2025! 🚀✨
+                      Ready for @GDGBhopal Cloud Community Day 2025! @gdgcloudbhopal🚀✨
                       <br /><br />
                       #CCD2025 #CCDBHOPAL #GoogleCloud #TechEvents
                     </p>
