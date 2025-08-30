@@ -1,13 +1,13 @@
-# GCCD 2025 Poster Creator
+# GDG Poster Creator
 
-A modern React web application for creating custom posters for Google Cloud Community Day 2025. Users can upload their photos, customize messages, and generate shareable posters for social media.
+A modern, interactive web application for creating personalized awareness posters with custom photos and messages.
 
-![GCCD 2025 Poster Creator](https://via.placeholder.com/800x400/4285F4/FFFFFF?text=GCCD+2025+Poster+Creator)
+![GDG Poster Creator](https://via.placeholder.com/800x400?text=GDG+Poster+Creator)
 
 ## Features
 
 🎨 **Custom Poster Generation**
-- Use official GDG Cloud Community Day 2025 poster template
+- Professional poster templates for awareness campaigns
 - Square or circular frame options for user photos
 - Real-time preview of the final poster
 
@@ -17,8 +17,8 @@ A modern React web application for creating custom posters for Google Cloud Comm
 - Drag, resize, and reposition uploaded images
 
 ✏️ **Message Customization**
-- Pre-written suggested messages
-- Custom message editor
+- Customizable awareness messages
+- Multiple template options
 - Real-time preview on poster
 
 📱 **Mobile Responsive**
@@ -51,8 +51,8 @@ A modern React web application for creating custom posters for Google Cloud Comm
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/your-username/gccd-2025-poster-creator.git
-cd gccd-2025-poster-creator
+git clone https://github.com/your-username/gdg-poster-creator.git
+cd gdg-poster-creator
 ```
 
 2. Install dependencies:
@@ -78,10 +78,10 @@ The built files will be in the `dist` directory, ready for deployment.
 ## Deployment Options
 
 ### Vercel (Recommended)
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/your-username/gccd-2025-poster-creator)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/your-username/gdg-poster-creator)
 
 ### Netlify
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/your-username/gccd-2025-poster-creator)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/your-username/gdg-poster-creator)
 
 ### Manual Deployment
 
@@ -142,18 +142,16 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments
 
-- Google Developer Groups for the official branding
-- Cloud Community Day organizers
 - React and Vite communities for excellent tooling
 
 ## Support
 
 If you encounter any issues or have questions:
 
-1. Check the [Issues](https://github.com/your-username/gccd-2025-poster-creator/issues) page
+1. Check the [Issues](https://github.com/your-username/gdg-poster-creator/issues) page
 2. Create a new issue with detailed information
-3. Contact the GDG Bhopal team
+3. Contact the development team
 
 ---
 
-Made with ❤️ for the Google Cloud Community
+Made with ❤️ for the community by the GDG team

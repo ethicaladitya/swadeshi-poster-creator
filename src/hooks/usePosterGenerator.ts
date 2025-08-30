@@ -5,8 +5,8 @@ export const usePosterGenerator = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const posterImages = {
-    poster1: "/lovable-uploads/cffb072f-1803-4498-b64e-f201089facda.png",
-    poster2: "/lovable-uploads/aa43d408-f9f1-488d-a569-3f933ac1d31a.png"
+    poster1: "/uploads/poster1.png",
+    poster2: "/uploads/poster2.png"
   };
 
   const generatePoster = async (
@@ -87,7 +87,7 @@ export const usePosterGenerator = () => {
       const posterDataURL = await generatePoster(userImage, frameType, customMessage, posterType);
 
       const link = document.createElement("a");
-      link.download = `GCCD-2025-Poster-${Date.now()}.png`;
+      link.download = `GDG-Poster-${Date.now()}.png`;
       link.href = posterDataURL;
       document.body.appendChild(link);
       link.click();
@@ -110,12 +110,12 @@ export const usePosterGenerator = () => {
       const posterDataURL = await generatePoster(userImage, frameType, customMessage, posterType);
       const response = await fetch(posterDataURL);
       const blob = await response.blob();
-      const file = new File([blob], "GCCD-2025-Poster.png", { type: "image/png" });
+      const file = new File([blob], "GDG-Poster.png", { type: "image/png" });
 
       if (navigator.share && navigator.canShare({ files: [file] })) {
         await navigator.share({
-          title: "My GCCD 2025 Poster",
-          text: "Check out my Cloud Community Day 2025 poster!",
+          title: "My GDG Awareness Poster",
+          text: "Check out my custom awareness poster!",
           files: [file]
         });
         return true;

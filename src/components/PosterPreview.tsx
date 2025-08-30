@@ -26,8 +26,8 @@ export const PosterPreview = ({
   onUploadClick,
 }: PosterPreviewProps) => {
   const posterImages = {
-    poster1: "/lovable-uploads/cffb072f-1803-4498-b64e-f201089facda.png",
-    poster2: "/lovable-uploads/aa43d408-f9f1-488d-a569-3f933ac1d31a.png"
+    poster1: "/uploads/poster1.png",
+    poster2: "/uploads/poster2.png"
   };
   return (
     <div className="flex flex-col items-center space-y-4 sm:space-y-6">

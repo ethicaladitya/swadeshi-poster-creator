@@ -76,7 +76,7 @@ const Index = () => {
 
     setIsGenerating(true);
     try {
-      await downloadPoster(userImage, frameType, posterType);
+      await downloadPoster(userImage, frameType, "", posterType);
       toast({
         title: "Success!",
         description: "Your poster has been downloaded successfully.",
@@ -105,7 +105,7 @@ const Index = () => {
 
     setIsSharing(true);
     try {
-      const result = await sharePoster(userImage, frameType, posterType);
+      const result = await sharePoster(userImage, frameType, "", posterType);
       
       if (result === 'clipboard') {
         toast({
@@ -147,10 +147,10 @@ const Index = () => {
               </div>
               <div>
                 <h1 className="text-xl font-bold font-display text-foreground">
-                  GCCD 2025 Poster Creator
+                  GDG Poster Creator
                 </h1>
                 <p className="text-sm text-muted-foreground">
-                  Create your custom Cloud Community Day poster
+                  Create custom awareness posters with your photos and messages
                 </p>
               </div>
             </div>
@@ -262,7 +262,7 @@ const Index = () => {
                         variant="outline"
                         size="sm"
                         onClick={() => {
-                          navigator.clipboard.writeText("🎉 Just created my personalized GCCD 2025 poster! Join me at Cloud Community Day Bhopal 2025 @gdgcloudbhopal🚀\n\n#CCD2025 #CCDBHOPAL #GoogleDeveloperGroups #CloudCommunityDay #TechEvents #Bhopal #GDGBhopal #GoogleCloud");
+                          navigator.clipboard.writeText("� Just created my personalized awareness poster! 📢 Join the movement and make a difference! ✨\n\n#GDGPosterCreator #AwarenessMatters #CommunityAction #MakeADifference #SocialImpact");
                           toast({
                             title: "Copied!",
                             description: "Caption copied to clipboard",
@@ -275,9 +275,9 @@ const Index = () => {
                       </Button>
                     </div>
                     <p className="text-sm text-slate-600 leading-relaxed">
-                      🎉 Just created my personalized GCCD 2025 poster! Join me at Cloud Community Day Bhopal 2025 @gdgcloudbhopal🚀
+                      � Just created my personalized awareness poster! 📢 Join the movement and make a difference! ✨
                       <br /><br />
-                      #CCD2025 #CCDBHOPAL #GoogleDeveloperGroups #CloudCommunityDay #TechEvents #Bhopal #GDGBhopal #GoogleCloud
+                      #GDGPosterCreator #AwarenessMatters #CommunityAction #MakeADifference #SocialImpact
                     </p>
                   </div>
 
@@ -288,7 +288,7 @@ const Index = () => {
                         variant="outline"
                         size="sm"
                         onClick={() => {
-                          navigator.clipboard.writeText("Excited to announce my participation in Cloud Community Day Bhopal 2025! @gdgcloudbhopal🚀\n\nThis premier tech event brings together cloud enthusiasts, developers, and industry experts to explore the latest in cloud technologies.\n\n#CCD2025 #CCDBHOPAL #GoogleDeveloperGroups #CloudCommunityDay #TechEvents #Bhopal #GDGBhopal #GoogleCloud #TechCommunity #CloudComputing");
+                          navigator.clipboard.writeText("� Excited to share my latest awareness poster creation!\n\nJust used the GDG Poster Creator to make a personalized poster for community awareness. It's amazing how technology can amplify our voices for positive change.\n\nKey features I loved:\n• Easy-to-use poster templates\n• Custom photo integration\n• Multiple sharing formats\n• Professional design output\n\nJoin the movement for community awareness and social impact!\n\n#GDGPosterCreator #CommunityAwareness #DigitalActivism #SocialImpact #TechForGood #MakeADifference");
                           toast({
                             title: "Copied!",
                             description: "LinkedIn caption copied to clipboard",
@@ -301,11 +301,11 @@ const Index = () => {
                       </Button>
                     </div>
                     <p className="text-sm text-slate-600 leading-relaxed">
-                      Excited to announce my participation in Cloud Community Day Bhopal 2025! @gdgcloudbhopal🚀
+                      � Excited to share my latest awareness poster creation!
                       <br /><br />
-                      This premier tech event brings together cloud enthusiasts, developers, and industry experts to explore the latest in cloud technologies.
+                      Just used the GDG Poster Creator to make a personalized poster for community awareness. Join the movement for community awareness and social impact!
                       <br /><br />
-                      #CCD2025 #CCDBHOPAL #GoogleDeveloperGroups #CloudCommunityDay #TechEvents #Bhopal #GDGBhopal #GoogleCloud #TechCommunity #CloudComputing
+                      #GDGPosterCreator #CommunityAwareness #DigitalActivism #SocialImpact #TechForGood #MakeADifference
                     </p>
                   </div>
 
@@ -316,7 +316,7 @@ const Index = () => {
                         variant="outline"
                         size="sm"
                         onClick={() => {
-                          navigator.clipboard.writeText("Ready for @GDGBhopal Cloud Community Day 2025! @gdgcloudbhopal🚀✨\n\n#CCD2025 #CCDBHOPAL #GoogleCloud #TechEvents");
+                          navigator.clipboard.writeText("� Just created my awareness poster! 📢 Every voice matters! #GDGPosterCreator #CommunityAction #MakeADifference");
                           toast({
                             title: "Copied!",
                             description: "Twitter caption copied to clipboard",
@@ -329,9 +329,7 @@ const Index = () => {
                       </Button>
                     </div>
                     <p className="text-sm text-slate-600 leading-relaxed">
-                      Ready for @GDGBhopal Cloud Community Day 2025! @gdgcloudbhopal🚀✨
-                      <br /><br />
-                      #CCD2025 #CCDBHOPAL #GoogleCloud #TechEvents
+                      � Just created my awareness poster! 📢 Every voice matters! #GDGPosterCreator #CommunityAction #MakeADifference
                     </p>
                   </div>
                 </div>
