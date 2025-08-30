@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { PosterPreview, type FrameType, type PosterType } from "@/components/PosterPreview";
@@ -17,6 +17,21 @@ const Index = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [isSharing, setIsSharing] = useState(false);
+
+  // Download counter state
+  const [downloadCount, setDownloadCount] = useState<number>(() => {
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('posterDownloadCount');
+      return stored ? parseInt(stored, 10) : 0;
+    }
+    return 0;
+  });
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('posterDownloadCount', downloadCount.toString());
+    }
+  }, [downloadCount]);
   
   const { downloadPoster, sharePoster } = usePosterGenerator();
   
@@ -77,6 +92,7 @@ const Index = () => {
     setIsGenerating(true);
     try {
       await downloadPoster(userImage, frameType, "", posterType);
+      setDownloadCount((prev) => prev + 1);
       toast({
         title: "Success!",
         description: "Your poster has been downloaded successfully.",
@@ -181,7 +197,15 @@ const Index = () => {
             <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
               <CardContent className="p-4 sm:p-6">
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold font-display">Generate Your Poster</h3>
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="text-lg font-semibold font-display mb-0">Generate Your Poster</h3>
+                    {/* Download Counter */}
+                    <div className="flex items-center gap-2 bg-gradient-to-r from-primary/80 to-accent/80 px-3 py-1 rounded-full shadow text-white font-mono text-sm select-none border border-primary/30">
+                      <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="mr-1"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 16v-8m0 8l-4-4m4 4l4-4M4 20h16" /></svg>
+                      <span className="tracking-wider font-bold" style={{ fontFamily: 'Orbitron, monospace' }}>{downloadCount}</span>
+                      <span className="ml-1">Downloaded</span>
+                    </div>
+                  </div>
                   <div className="grid sm:grid-cols-2 gap-3">
                     <Button
                       onClick={handleDownload}
