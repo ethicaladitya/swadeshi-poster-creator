@@ -1,8 +1,8 @@
-# GDG Poster Creator
+# Swadeshi Poster Creator
 
 A modern, interactive web application for creating personalized awareness posters with custom photos and messages.
 
-![GDG Poster Creator](https://via.placeholder.com/800x400?text=GDG+Poster+Creator)
+![Swadeshi Poster Creator](https://via.placeholder.com/800x400?text=Swadeshi+Poster+Creator)
 
 ## Features
 
@@ -51,8 +51,8 @@ A modern, interactive web application for creating personalized awareness poster
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/your-username/gdg-poster-creator.git
-cd gdg-poster-creator
+git clone https://github.com/your-username/swadeshi-poster-creator.git
+cd swadeshi-poster-creator
 ```
 
 2. Install dependencies:
@@ -78,10 +78,10 @@ The built files will be in the `dist` directory, ready for deployment.
 ## Deployment Options
 
 ### Vercel (Recommended)
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/your-username/gdg-poster-creator)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/your-username/swadeshi-poster-creator)
 
 ### Netlify
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/your-username/gdg-poster-creator)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/your-username/swadeshi-poster-creator)
 
 ### Manual Deployment
 
@@ -148,10 +148,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 If you encounter any issues or have questions:
 
-1. Check the [Issues](https://github.com/your-username/gdg-poster-creator/issues) page
+1. Check the [Issues](https://github.com/your-username/swadeshi-poster-creator/issues) page
 2. Create a new issue with detailed information
 3. Contact the development team
 
 ---
 
-Made with ❤️ for the community by the GDG team
+Made with ❤️ for the community by the swadeshi team

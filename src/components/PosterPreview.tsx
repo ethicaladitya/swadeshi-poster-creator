@@ -98,7 +98,7 @@ export const PosterPreview = ({
           />
           
           {/* User Image Frame - positioned in the middle center of the poster */}
-          <div className="absolute left-1/2 top-[38%] transform -translate-x-1/2">
+          <div className="absolute left-1/2 top-[39.5%] transform -translate-x-1/2">
             <div 
               className={`relative w-40 h-40 sm:w-48 sm:h-48 border-2 sm:border-4 border-white shadow-lg overflow-hidden ${
                 frameType === "circle" ? "poster-frame-circle" : "poster-frame-square"

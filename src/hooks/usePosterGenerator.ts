@@ -87,7 +87,7 @@ export const usePosterGenerator = () => {
       const posterDataURL = await generatePoster(userImage, frameType, customMessage, posterType);
 
       const link = document.createElement("a");
-      link.download = `GDG-Poster-${Date.now()}.png`;
+      link.download = `Swadeshi-Poster-${Date.now()}.png`;
       link.href = posterDataURL;
       document.body.appendChild(link);
       link.click();
@@ -110,11 +110,11 @@ export const usePosterGenerator = () => {
       const posterDataURL = await generatePoster(userImage, frameType, customMessage, posterType);
       const response = await fetch(posterDataURL);
       const blob = await response.blob();
-      const file = new File([blob], "GDG-Poster.png", { type: "image/png" });
+      const file = new File([blob], "Swadeshi-Poster.png", { type: "image/png" });
 
       if (navigator.share && navigator.canShare({ files: [file] })) {
         await navigator.share({
-          title: "My GDG Awareness Poster",
+          title: "My Swadeshi Awareness Poster",
           text: "Check out my custom awareness poster!",
           files: [file]
         });

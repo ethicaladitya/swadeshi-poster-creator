@@ -147,7 +147,7 @@ const Index = () => {
               </div>
               <div>
                 <h1 className="text-xl font-bold font-display text-foreground">
-                  GDG Poster Creator
+                  swadeshi Poster Creator
                 </h1>
                 <p className="text-sm text-muted-foreground">
                   Create custom awareness posters with your photos and messages
@@ -262,7 +262,7 @@ const Index = () => {
                         variant="outline"
                         size="sm"
                         onClick={() => {
-                          navigator.clipboard.writeText("� Just created my personalized awareness poster! 📢 Join the movement and make a difference! ✨\n\n#GDGPosterCreator #AwarenessMatters #CommunityAction #MakeADifference #SocialImpact");
+                          navigator.clipboard.writeText("� Just created my personalized awareness poster! 📢 Join the movement and make a difference! ✨\n\n#swadeshiPosterCreator #AwarenessMatters #CommunityAction #MakeADifference #SocialImpact");
                           toast({
                             title: "Copied!",
                             description: "Caption copied to clipboard",
@@ -277,7 +277,7 @@ const Index = () => {
                     <p className="text-sm text-slate-600 leading-relaxed">
                       � Just created my personalized awareness poster! 📢 Join the movement and make a difference! ✨
                       <br /><br />
-                      #GDGPosterCreator #AwarenessMatters #CommunityAction #MakeADifference #SocialImpact
+                      #swadeshiPosterCreator #AwarenessMatters #CommunityAction #MakeADifference #SocialImpact
                     </p>
                   </div>
 
@@ -288,7 +288,7 @@ const Index = () => {
                         variant="outline"
                         size="sm"
                         onClick={() => {
-                          navigator.clipboard.writeText("� Excited to share my latest awareness poster creation!\n\nJust used the GDG Poster Creator to make a personalized poster for community awareness. It's amazing how technology can amplify our voices for positive change.\n\nKey features I loved:\n• Easy-to-use poster templates\n• Custom photo integration\n• Multiple sharing formats\n• Professional design output\n\nJoin the movement for community awareness and social impact!\n\n#GDGPosterCreator #CommunityAwareness #DigitalActivism #SocialImpact #TechForGood #MakeADifference");
+                          navigator.clipboard.writeText("� Excited to share my latest awareness poster creation!\n\nJust used the swadeshi Poster Creator to make a personalized poster for community awareness. It's amazing how technology can amplify our voices for positive change.\n\nKey features I loved:\n• Easy-to-use poster templates\n• Custom photo integration\n• Multiple sharing formats\n• Professional design output\n\nJoin the movement for community awareness and social impact!\n\n#swadeshiPosterCreator #CommunityAwareness #DigitalActivism #SocialImpact #TechForGood #MakeADifference");
                           toast({
                             title: "Copied!",
                             description: "LinkedIn caption copied to clipboard",
@@ -303,9 +303,9 @@ const Index = () => {
                     <p className="text-sm text-slate-600 leading-relaxed">
                       � Excited to share my latest awareness poster creation!
                       <br /><br />
-                      Just used the GDG Poster Creator to make a personalized poster for community awareness. Join the movement for community awareness and social impact!
+                      Just used the swadeshi Poster Creator to make a personalized poster for community awareness. Join the movement for community awareness and social impact!
                       <br /><br />
-                      #GDGPosterCreator #CommunityAwareness #DigitalActivism #SocialImpact #TechForGood #MakeADifference
+                      #swadeshiPosterCreator #CommunityAwareness #DigitalActivism #SocialImpact #TechForGood #MakeADifference
                     </p>
                   </div>
 
@@ -316,7 +316,7 @@ const Index = () => {
                         variant="outline"
                         size="sm"
                         onClick={() => {
-                          navigator.clipboard.writeText("� Just created my awareness poster! 📢 Every voice matters! #GDGPosterCreator #CommunityAction #MakeADifference");
+                          navigator.clipboard.writeText("� Just created my awareness poster! 📢 Every voice matters! #swadeshiPosterCreator #CommunityAction #MakeADifference");
                           toast({
                             title: "Copied!",
                             description: "Twitter caption copied to clipboard",
@@ -329,7 +329,7 @@ const Index = () => {
                       </Button>
                     </div>
                     <p className="text-sm text-slate-600 leading-relaxed">
-                      � Just created my awareness poster! 📢 Every voice matters! #GDGPosterCreator #CommunityAction #MakeADifference
+                      � Just created my awareness poster! 📢 Every voice matters! #swadeshiPosterCreator #CommunityAction #MakeADifference
                     </p>
                   </div>
                 </div>
