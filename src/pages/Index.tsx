@@ -216,10 +216,10 @@ const Index = () => {
               </div>
               <div>
                 <h1 className="text-xl font-bold font-display text-foreground">
-                  swadeshi Poster Creator
+                  Swadeshi Bharat Abhiyan - Poster Creator
                 </h1>
                 <p className="text-sm text-muted-foreground">
-                  Create custom awareness posters with your photos and messages
+                  Bharat ko Atmanirbhar banane ki disha mein ham sabka sankalp. 
                 </p>
               </div>
             </div>
