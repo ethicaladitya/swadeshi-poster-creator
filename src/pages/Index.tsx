@@ -234,6 +234,19 @@ const Index = () => {
           <div className="space-y-4 lg:space-y-6">
             <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
               <CardContent className="p-4 sm:p-6">
+                {/* Upload Button Enhancement */}
+                <div className="flex flex-col items-center mb-6">
+                  <span className="text-base font-semibold text-primary mb-2">Upload Your Photo</span>
+                  <button
+                    type="button"
+                    onClick={handleUploadClick}
+                    className="bg-gradient-to-r from-orange-400 to-pink-500 text-white font-bold py-3 px-6 rounded-full shadow-lg border-2 border-orange-500 hover:scale-105 hover:shadow-xl transition-all duration-200 flex items-center gap-2 text-lg"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5-5m0 0l5 5m-5-5v12" /></svg>
+                    Upload Photo
+                  </button>
+                </div>
+                {/* Existing PosterPreview component below */}
                 <PosterPreview
                   userImage={userImage}
                   frameType={frameType}
@@ -378,8 +391,7 @@ const Index = () => {
                         variant="outline"
                         size="sm"
                         onClick={() => {
-                          navigator.clipboard.writeText("� Just created my personalized awareness poster! 📢 Join the movement and make a difference! ✨\n\n#swadeshiPosterCreator #AwarenessMatters #CommunityAction #MakeADifference #SocialImpact");
-                          toast({
+                            navigator.clipboard.writeText("🇮🇳हम भारत वासी🇮🇳\n\nसंकल्प करे और संकल्प करवायें\nस्वदेशी अपनाएं और सभी को प्रेरित करे\n\n🤳 अपनी Selfie लेकर संकल्प करे भारत को आत्मनिर्भर बनाने का\nसेल्फी को डाउनलोड करके स्टेटस लगाए एवं लिंक को शेयर करे\n✨ आपका सहयोग ही हमारे अभियान की ताक़त है।\n\n— टीम 'स्वदेशी भारत अभियान'\n\n📌 Facebook: Swadeshibharatabhiyan\n📌 Instagram: Swadeshibharatabhiyan100\n📌 X: Swadeshibharatabhiyan");                          toast({
                             title: "Copied!",
                             description: "Caption copied to clipboard",
                           });
@@ -391,9 +403,7 @@ const Index = () => {
                       </Button>
                     </div>
                     <p className="text-sm text-slate-600 leading-relaxed">
-                      � Just created my personalized awareness poster! 📢 Join the movement and make a difference! ✨
-                      <br /><br />
-                      #swadeshiPosterCreator #AwarenessMatters #CommunityAction #MakeADifference #SocialImpact
+                      🇮🇳 हम भारतवासी संकल्प लें और संकल्प करवाएँ — स्वदेशी अपनाएँ, सभी को प्रेरित करें और आत्मनिर्भर भारत बनाएं 📸 अपनी सेल्फी लेकर संकल्प करें, स्टेटस लगाएँ और लिंक शेयर करें ✨ आपका सहयोग ही हमारे अभियान की ताक़त है #SwadeshiBharatAbhiyan
                     </p>
                   </div>
 
@@ -404,7 +414,7 @@ const Index = () => {
                         variant="outline"
                         size="sm"
                         onClick={() => {
-                          navigator.clipboard.writeText("� Excited to share my latest awareness poster creation!\n\nJust used the swadeshi Poster Creator to make a personalized poster for community awareness. It's amazing how technology can amplify our voices for positive change.\n\nKey features I loved:\n• Easy-to-use poster templates\n• Custom photo integration\n• Multiple sharing formats\n• Professional design output\n\nJoin the movement for community awareness and social impact!\n\n#swadeshiPosterCreator #CommunityAwareness #DigitalActivism #SocialImpact #TechForGood #MakeADifference");
+                          navigator.clipboard.writeText("🇮🇳 हम भारतवासी संकल्प लें और संकल्प करवाएँ — स्वदेशी अपनाएँ, सभी को प्रेरित करें और आत्मनिर्भर भारत बनाएं 📸 अपनी सेल्फी लेकर संकल्प करें, स्टेटस लगाएँ और लिंक शेयर करें ✨ आपका सहयोग ही हमारे अभियान की ताक़त है, आइए मिलकर स्वदेशी भारत अभियान को गति दें #SwadeshiBharatAbhiyan");
                           toast({
                             title: "Copied!",
                             description: "LinkedIn caption copied to clipboard",
@@ -417,11 +427,7 @@ const Index = () => {
                       </Button>
                     </div>
                     <p className="text-sm text-slate-600 leading-relaxed">
-                      � Excited to share my latest awareness poster creation!
-                      <br /><br />
-                      Just used the swadeshi Poster Creator to make a personalized poster for community awareness. Join the movement for community awareness and social impact!
-                      <br /><br />
-                      #swadeshiPosterCreator #CommunityAwareness #DigitalActivism #SocialImpact #TechForGood #MakeADifference
+                      🇮🇳 हम भारतवासी संकल्प लें और संकल्प करवाएँ — स्वदेशी अपनाएँ, सभी को प्रेरित करें और आत्मनिर्भर भारत बनाएं 📸 अपनी सेल्फी लेकर संकल्प करें, स्टेटस लगाएँ और लिंक शेयर करें ✨ आपका सहयोग ही हमारे अभियान की ताक़त है, आइए मिलकर स्वदेशी भारत अभियान को गति दें #SwadeshiBharatAbhiyan
                     </p>
                   </div>
 
@@ -432,7 +438,7 @@ const Index = () => {
                         variant="outline"
                         size="sm"
                         onClick={() => {
-                          navigator.clipboard.writeText("� Just created my awareness poster! 📢 Every voice matters! #swadeshiPosterCreator #CommunityAction #MakeADifference");
+                          navigator.clipboard.writeText("🇮🇳 हम भारतवासी संकल्प लें और संकल्प करवाएँ — स्वदेशी अपनाएँ, सभी को प्रेरित करें और आत्मनिर्भर भारत बनाएं 📸 अपनी सेल्फी लेकर संकल्प करें, स्टेटस लगाएँ और लिंक शेयर करें ✨ आपका सहयोग ही हमारे अभियान की ताक़त है, आइए मिलकर स्वदेशी भारत अभियान को गति दें #SwadeshiBharatAbhiyan");
                           toast({
                             title: "Copied!",
                             description: "Twitter caption copied to clipboard",
@@ -445,7 +451,7 @@ const Index = () => {
                       </Button>
                     </div>
                     <p className="text-sm text-slate-600 leading-relaxed">
-                      � Just created my awareness poster! 📢 Every voice matters! #swadeshiPosterCreator #CommunityAction #MakeADifference
+                      🇮🇳 हम भारतवासी संकल्प लें और संकल्प करवाएँ — स्वदेशी अपनाएँ, सभी को प्रेरित करें और आत्मनिर्भर भारत बनाएं 📸 अपनी सेल्फी लेकर संकल्प करें, स्टेटस लगाएँ और लिंक शेयर करें ✨ आपका सहयोग ही हमारे अभियान की ताक़त है, आइए मिलकर स्वदेशी भारत अभियान को गति दें #SwadeshiBharatAbhiyan
                     </p>
                   </div>
                 </div>
