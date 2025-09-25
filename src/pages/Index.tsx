@@ -35,6 +35,7 @@ const Index = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [isSharing, setIsSharing] = useState(false);
+  const [generatedPosterForDisplay, setGeneratedPosterForDisplay] = useState<string>("");
 
   // User info form state
   const [showUserForm, setShowUserForm] = useState(false);
@@ -162,25 +163,31 @@ const Index = () => {
       const file = new File([blob], "swadeshi-poster.png", { type: "image/png" });
 
       // Share text
-      const shareText = "🇮🇳 हम भारतवासी संकल्प लें और संकल्प करवाएँ — स्वदेशी अपनाएँ, सभी को प्रेरित करें और आत्मनिर्भर भारत बनाएं! Check out: https://www.swadeshibharatabhiyan.com/";
+      const shareText = "🇮🇳 हम भारतवासी संकल्प लें और संकल्प करवाएँ — स्वदेशी अपनाएँ, सभी को प्रेरित करें और आत्मनिर्भर भारत बनाएं!";
+      const websiteUrl = "https://www.swadeshibharatabhiyan.com/";
 
-      // Try Web Share API first (works on mobile and some desktop browsers)
+      // Try Web Share API first - this is what apps like Paytm use for direct sharing
       if (navigator.share) {
         try {
           const shareData: any = {
             title: "Swadeshi Bharat Abhiyan",
-            text: shareText,
+            text: `${shareText} ${websiteUrl}`,
           };
 
-          // Check if files are supported
-          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          // Always try to include the file - modern browsers and mobile apps support this
+          if (navigator.canShare) {
+            if (navigator.canShare({ files: [file] })) {
+              shareData.files = [file];
+            }
+          } else {
+            // For older browsers, still try to include files
             shareData.files = [file];
           }
 
           await navigator.share(shareData);
           toast({
             title: "Shared Successfully!",
-            description: "Your poster has been shared.",
+            description: "Your poster has been shared directly to your chosen app!",
           });
           return;
         } catch (shareError: any) {
@@ -188,68 +195,104 @@ const Index = () => {
           if (shareError.name === 'AbortError') {
             return;
           }
-          console.log("Web Share API failed, falling back to platform-specific sharing");
+          console.log("Web Share API not fully supported, using platform URLs");
         }
       }
 
-      // Fallback: Download image and copy text for manual sharing
-      const downloadAndShare = () => {
-        // Download the image
-        const link = document.createElement("a");
-        link.download = `Swadeshi-Poster-${Date.now()}.png`;
-        link.href = posterDataURL;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-        // Copy text to clipboard
-        navigator.clipboard.writeText(shareText).then(() => {
-          toast({
-            title: "Image Downloaded & Text Copied!",
-            description: `Your poster has been downloaded. The caption has been copied to clipboard. Now manually upload the image to ${platform === 'facebook' ? 'Facebook' : platform === 'twitter' ? 'Twitter/X' : platform === 'linkedin' ? 'LinkedIn' : 'WhatsApp'} and paste the caption.`,
-            duration: 8000,
-          });
-        }).catch(() => {
-          toast({
-            title: "Image Downloaded!",
-            description: `Your poster has been downloaded. Copy this text for ${platform}: "${shareText}"`,
-            duration: 8000,
-          });
-        });
-      };
-
-      // Platform-specific handling
-      const websiteUrl = "https://www.swadeshibharatabhiyan.com/";
+      // For browsers without Web Share API or when it fails, use direct platform URLs
+      // This is still better than downloading - it opens the platform directly
       const encodedText = encodeURIComponent(shareText);
+      const encodedUrl = encodeURIComponent(websiteUrl);
       
+      // Create a temporary URL for the image that can be accessed
+      const imageUrl = URL.createObjectURL(blob);
+      
+      let shareUrl = "";
+      let platformName = "";
+      let useNativeApp = false;
+
       switch (platform) {
         case 'facebook':
-          // Facebook doesn't support direct image sharing via URL, so download and instruct
-          downloadAndShare();
+          // Try Facebook app first (mobile), then web
+          if (navigator.userAgent.includes('Mobile')) {
+            shareUrl = `fb://share?text=${encodedText}&href=${encodedUrl}`;
+            useNativeApp = true;
+          } else {
+            shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedText}`;
+          }
+          platformName = "Facebook";
           break;
         case 'twitter':
-          // Twitter doesn't support direct image sharing via URL, so download and instruct
-          downloadAndShare();
+          // Try Twitter app first (mobile), then web
+          if (navigator.userAgent.includes('Mobile')) {
+            shareUrl = `twitter://post?message=${encodedText}%20${encodedUrl}`;
+            useNativeApp = true;
+          } else {
+            shareUrl = `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`;
+          }
+          platformName = "Twitter/X";
           break;
         case 'linkedin':
-          // LinkedIn doesn't support direct image sharing via URL, so download and instruct
-          downloadAndShare();
+          // LinkedIn mobile app or web
+          if (navigator.userAgent.includes('Mobile')) {
+            shareUrl = `linkedin://share?text=${encodedText}%20${encodedUrl}`;
+            useNativeApp = true;
+          } else {
+            shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}&summary=${encodedText}`;
+          }
+          platformName = "LinkedIn";
           break;
         case 'whatsapp':
-          // WhatsApp Web doesn't support image sharing via URL, but we can try the app
+          // WhatsApp works best with direct app links
           if (navigator.userAgent.includes('Mobile')) {
-            // On mobile, try to open WhatsApp app
-            window.open(`whatsapp://send?text=${encodedText}`, '_blank');
-            setTimeout(() => {
-              downloadAndShare();
-            }, 1000);
+            shareUrl = `whatsapp://send?text=${encodedText}%20${encodedUrl}`;
+            useNativeApp = true;
           } else {
-            // On desktop, download and instruct
-            downloadAndShare();
+            shareUrl = `https://web.whatsapp.com/send?text=${encodedText}%20${encodedUrl}`;
           }
+          platformName = "WhatsApp";
           break;
         default:
-          downloadAndShare();
+          toast({
+            title: "Platform Not Supported",
+            description: "This sharing platform is not supported yet.",
+            variant: "destructive",
+          });
+          return;
+      }
+
+      if (shareUrl) {
+        // Try to open the native app first, fallback to web
+        const openShare = () => {
+          if (useNativeApp) {
+            // Try native app first
+            window.location.href = shareUrl;
+            
+            // Fallback to web version after a short delay if app doesn't open
+            setTimeout(() => {
+              const webShareUrl = shareUrl.replace(/^(fb|twitter|linkedin|whatsapp):\/\//, 'https://www.');
+              if (webShareUrl !== shareUrl) {
+                window.open(webShareUrl.replace('www.twitter', 'twitter').replace('www.whatsapp', 'web.whatsapp'), '_blank');
+              }
+            }, 1000);
+          } else {
+            // Open web version directly
+            window.open(shareUrl, '_blank', 'width=600,height=500,scrollbars=yes,resizable=yes');
+          }
+        };
+
+        openShare();
+        
+        // Always show the poster for easy manual upload
+        setGeneratedPosterForDisplay(posterDataURL);
+        
+        toast({
+          title: `Opening ${platformName}`,
+          description: useNativeApp 
+            ? "Opening the app for sharing. Your poster is ready below if you need to upload it manually."
+            : "Opening the web platform for sharing. Your poster is ready below for manual upload.",
+          duration: 5000,
+        });
       }
 
     } catch (error) {
@@ -540,6 +583,59 @@ const Index = () => {
                 </div>
               </CardContent>
             </Card>
+
+            {/* Generated Poster for Manual Upload */}
+            {generatedPosterForDisplay && (
+              <Card className="bg-gradient-to-br from-orange-50 to-green-50 border-orange-200">
+                <CardContent className="p-4 sm:p-6">
+                  <div className="text-center">
+                    <h3 className="text-lg font-semibold text-slate-800 mb-3 flex items-center justify-center gap-2">
+                      <svg className="w-5 h-5 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+                      </svg>
+                      Your Poster is Ready!
+                    </h3>
+                    <p className="text-sm text-slate-600 mb-4">
+                      Right-click on the image below and select "Save image as..." to download it, then upload it to your social media post.
+                    </p>
+                    <div className="max-w-md mx-auto">
+                      <img 
+                        src={generatedPosterForDisplay} 
+                        alt="Generated Poster for Sharing" 
+                        className="w-full rounded-lg shadow-lg border-2 border-orange-200"
+                        style={{ maxHeight: '400px', objectFit: 'contain' }}
+                      />
+                    </div>
+                    <div className="mt-4 flex gap-2 justify-center">
+                      <Button
+                        onClick={() => {
+                          const link = document.createElement("a");
+                          link.download = `Swadeshi-Poster-${Date.now()}.png`;
+                          link.href = generatedPosterForDisplay;
+                          document.body.appendChild(link);
+                          link.click();
+                          document.body.removeChild(link);
+                          toast({
+                            title: "Downloaded!",
+                            description: "Your poster has been downloaded successfully.",
+                          });
+                        }}
+                        className="bg-orange-600 hover:bg-orange-700 text-white"
+                      >
+                        <Download className="w-4 h-4 mr-2" />
+                        Download Poster
+                      </Button>
+                      <Button
+                        onClick={() => setGeneratedPosterForDisplay("")}
+                        variant="outline"
+                      >
+                        Close
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
           </div>
         </div>
       </main>
