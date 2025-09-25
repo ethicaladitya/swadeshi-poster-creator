@@ -21,6 +21,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { PosterPreview, type FrameType, type PosterType } from "@/components/PosterPreview";
 import { CameraCapture } from "@/components/CameraCapture";
 import { PhotoEditor } from "@/components/PhotoEditor";
+import SocialShareModal from "@/components/SocialShareModal";
 import { usePosterGenerator } from "@/hooks/usePosterGenerator";
 import { Download, Share2, Wand2, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -34,35 +35,16 @@ const Index = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [isSharing, setIsSharing] = useState(false);
-
+  const [showShareModal, setShowShareModal] = useState(false);
+  const [generatedPosterURL, setGeneratedPosterURL] = useState<string>("");
 
   // User info form state
   const [showUserForm, setShowUserForm] = useState(false);
   const [userName, setUserName] = useState("");
   const [userPhone, setUserPhone] = useState("");
   const [formTouched, setFormTouched] = useState(false);
-
-  // Download counter state
-  const [downloadCount, setDownloadCount] = useState<number>(() => {
-    if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem('posterDownloadCount');
-      return stored ? parseInt(stored, 10) : 0;
-    }
-    return 0;
-  });
-
-  // Always reset form for each download
-  useEffect(() => {
-    // Don't prefill from localStorage - always ask for fresh info
-  }, []);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('posterDownloadCount', downloadCount.toString());
-    }
-  }, [downloadCount]);
   
-  const { downloadPoster, sharePoster } = usePosterGenerator();
+  const { downloadPoster, sharePoster, generatePoster } = usePosterGenerator();
   
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
@@ -136,7 +118,6 @@ const Index = () => {
       setIsGenerating(true);
       try {
         await downloadPoster(userImage, frameType, "", posterType);
-        setDownloadCount((prev) => prev + 1);
         toast({
           title: "Success!",
           description: "Your poster has been downloaded successfully.",
@@ -174,33 +155,35 @@ const Index = () => {
 
     setIsSharing(true);
     try {
-      const result = await sharePoster(userImage, frameType, "", posterType);
-      
-      if (result === 'clipboard') {
-        toast({
-          title: "Copied to Clipboard!",
-          description: "Your poster has been copied to clipboard. You can now paste it in your social media apps.",
-        });
-      } else if (result === 'download') {
-        toast({
-          title: "Downloaded!",
-          description: "Sharing not supported on this device. Your poster has been downloaded instead.",
-        });
-      } else {
-        toast({
-          title: "Shared Successfully!",
-          description: "Your poster is ready to share on social media.",
-        });
-      }
+      // Generate the poster and get the data URL
+      const posterDataURL = await generatePoster(userImage, frameType, "", posterType);
+      setGeneratedPosterURL(posterDataURL);
+      setShowShareModal(true);
     } catch (error) {
       console.error("Share error:", error);
       toast({
         title: "Share Failed",
-        description: "There was an error sharing your poster. Please try again.",
+        description: "There was an error generating your poster. Please try again.",
         variant: "destructive",
       });
     } finally {
       setIsSharing(false);
+    }
+  };
+
+  const handleShareDownload = async () => {
+    if (generatedPosterURL) {
+      const link = document.createElement("a");
+      link.download = `Swadeshi-Poster-${Date.now()}.png`;
+      link.href = generatedPosterURL;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      toast({
+        title: "Downloaded!",
+        description: "Your poster has been downloaded successfully.",
+      });
     }
   };
 
@@ -263,7 +246,6 @@ const Index = () => {
             <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
               <CardContent className="p-4 sm:p-6">
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between mb-2">
                   {/* User Info Modal */}
                   <Dialog open={showUserForm} onOpenChange={setShowUserForm}>
                     <DialogContent>
@@ -303,14 +285,7 @@ const Index = () => {
                       </form>
                     </DialogContent>
                   </Dialog>
-                    <h3 className="text-lg font-semibold font-display mb-0">Generate Your Poster</h3>
-                    {/* Download Counter */}
-                    <div className="flex items-center gap-2 bg-gradient-to-r from-primary/80 to-accent/80 px-3 py-1 rounded-full shadow text-white font-mono text-sm select-none border border-primary/30">
-                      <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="mr-1"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 16v-8m0 8l-4-4m4 4l4-4M4 20h16" /></svg>
-                      <span className="tracking-wider font-bold" style={{ fontFamily: 'Orbitron, monospace' }}>{downloadCount}</span>
-                      <span className="ml-1">Downloaded</span>
-                    </div>
-                  </div>
+                  <h3 className="text-lg font-semibold font-display mb-4">Generate Your Poster</h3>
                   <div className="grid sm:grid-cols-2 gap-3">
                     <Button
                       onClick={handleDownload}
@@ -486,6 +461,14 @@ const Index = () => {
           onDiscard={handleEditorDiscard}
         />
       )}
+
+      {/* Social Share Modal */}
+      <SocialShareModal
+        isOpen={showShareModal}
+        onClose={() => setShowShareModal(false)}
+        posterDataURL={generatedPosterURL}
+        onDownload={handleShareDownload}
+      />
     </div>
   );
 };
