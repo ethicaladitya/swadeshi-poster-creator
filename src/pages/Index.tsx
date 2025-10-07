@@ -1,21 +1,4 @@
-// Send name and phone to Google Sheet via Google Form
-async function sendToGoogleSheet(name: string, phone: string) {
-  const formData = new FormData();
-  formData.append("entry.331566778", name);
-  formData.append("entry.956618258", phone);
-  await fetch(
-    "https://docs.google.com/forms/d/e/1FAIpQLSdIcy1jbVS0waogiU7C0pjoHp9YJ1YwkPDJxUPWLrTkwqHfXA/formResponse",
-    {
-      method: "POST",
-      mode: "no-cors",
-      body: formData,
-    }
-  );
-}
 import { useState, useRef, useEffect } from "react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { PosterPreview, type FrameType, type PosterType } from "@/components/PosterPreview";
@@ -36,12 +19,6 @@ const Index = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [isSharing, setIsSharing] = useState(false);
   const [generatedPosterForDisplay, setGeneratedPosterForDisplay] = useState<string>("");
-
-  // User info form state
-  const [showUserForm, setShowUserForm] = useState(false);
-  const [userName, setUserName] = useState("");
-  const [userPhone, setUserPhone] = useState("");
-  const [formTouched, setFormTouched] = useState(false);
   
   const { downloadPoster, sharePoster, generatePoster } = usePosterGenerator();
   
@@ -90,56 +67,35 @@ const Index = () => {
   };
 
 
-  const handleUserFormSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setFormTouched(true);
-    if (userName.trim() && userPhone.trim()) {
-      setShowUserForm(false);
-      
-      // Check for photo before proceeding
-      if (!userImage) {
-        toast({
-          title: "No Photo",
-          description: "Please add your photo first.",
-          variant: "destructive",
-        });
-        return;
-      }
-
-      // Send to Google Sheet
-      try {
-        await sendToGoogleSheet(userName.trim(), userPhone.trim());
-      } catch (error) {
-        console.error("Error sending to Google Sheet:", error);
-      }
-
-      // Proceed with download
-      setIsGenerating(true);
-      try {
-        await downloadPoster(userImage, frameType, "", posterType);
-        toast({
-          title: "Success!",
-          description: "Your poster has been downloaded successfully.",
-        });
-      } catch (error) {
-        console.error("Download error:", error);
-        toast({
-          title: "Download Failed",
-          description: "There was an error generating your poster. Please try again.",
-          variant: "destructive",
-        });
-      } finally {
-        setIsGenerating(false);
-      }
-    }
-  };
+  
 
   const handleDownload = async () => {
-    // Always show the form before every download
-    setUserName(""); // Clear previous values
-    setUserPhone("");
-    setShowUserForm(true);
-    setFormTouched(false);
+    if (!userImage) {
+      toast({
+        title: "No Photo",
+        description: "Please add your photo first.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsGenerating(true);
+    try {
+      await downloadPoster(userImage, frameType, "", posterType);
+      toast({
+        title: "Downloaded!",
+        description: "Your poster has been downloaded successfully.",
+      });
+    } catch (error) {
+      console.error("Download error:", error);
+      toast({
+        title: "Download Failed",
+        description: "There was an error downloading your poster. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   const handleSocialShare = async (platform: string) => {
@@ -368,45 +324,6 @@ const Index = () => {
             <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
               <CardContent className="p-4 sm:p-6">
                 <div className="space-y-4">
-                  {/* User Info Modal */}
-                  <Dialog open={showUserForm} onOpenChange={setShowUserForm}>
-                    <DialogContent>
-                      <form onSubmit={handleUserFormSubmit} className="space-y-4">
-                        <h2 className="text-lg font-semibold">Enter your details to download</h2>
-                        <div>
-                          <Label htmlFor="userName">Name <span className="text-red-500">*</span></Label>
-                          <Input
-                            id="userName"
-                            value={userName}
-                            onChange={e => setUserName(e.target.value)}
-                            placeholder="Your Name"
-                            required
-                            className={formTouched && !userName ? 'border-red-500' : ''}
-                          />
-                          {formTouched && !userName && (
-                            <div className="text-xs text-red-500 mt-1">Name is required</div>
-                          )}
-                        </div>
-                        <div>
-                          <Label htmlFor="userPhone">Phone Number <span className="text-red-500">*</span></Label>
-                          <Input
-                            id="userPhone"
-                            value={userPhone}
-                            onChange={e => setUserPhone(e.target.value)}
-                            placeholder="Phone Number"
-                            required
-                            type="tel"
-                            pattern="[0-9]{10,}"
-                            className={formTouched && !userPhone ? 'border-red-500' : ''}
-                          />
-                          {formTouched && !userPhone && (
-                            <div className="text-xs text-red-500 mt-1">Phone number is required</div>
-                          )}
-                        </div>
-                        <button type="submit" className="w-full bg-primary text-white rounded-md py-2 font-semibold mt-2">Continue</button>
-                      </form>
-                    </DialogContent>
-                  </Dialog>
                   <h3 className="text-lg font-semibold font-display mb-4">Generate Your Poster</h3>
                   <div className="grid sm:grid-cols-2 gap-3">
                     <Button
